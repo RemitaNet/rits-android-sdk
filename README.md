@@ -26,7 +26,7 @@ The following pages outlines the steps to integrating Remita Inline Payment SDK 
  
 
 **Step 3:** Select **Modules** and click the &quot; **+**&quot; under Modules section to add the &quot;rip-sdk.aar&quot; to your project.
-Note: You can find the rip-sdk.aar at: https://github.com/RemitaNet/remita-android/tree/master/aar
+Note: You can find the rits-sdk.aar at: https://github.com/RemitaNet/remita-android/tree/master/aar
 
  ![](images/modules.JPG)
 
@@ -49,13 +49,13 @@ Note: You can find the rip-sdk.aar at: https://github.com/RemitaNet/remita-andro
 **Step 7:** Select **Module Dependency**
 ![](images/module_dependency.JPG)
  
-**Step 8:** Select the **rip-sdk** module and click &#39;OK&#39;.
+**Step 8:** Select the **rits-sdk** module and click &#39;OK&#39;.
 ![](images/select_rip-sdk.JPG)
  
 **Step 9:** Click on **Apply/Ok.**
 ![](images/select_rip-sdk_2.JPG)
 
-**Step 10:** Rebuild project, you should see **implementation project(path: &#39;:rip-sdk&#39;)** in your dependencies block.
+**Step 10:** Rebuild project, you should see **implementation project(path: &#39;:rits-sdk&#39;)** in your dependencies block.
 ![](images/rebuild.JPG)
 
 **Step 11:** Just in case
@@ -66,9 +66,6 @@ Add  **api 'com.google.code.gson:gson:2.8.2'** to your applications dependencies
 
 
 # 2.0         TRY IT NOW
-
-You should invoke the RemitaInlinePaymentSDK.getInstance() at any point when making payment:
-
 
 **Sample Code:**
 ```java
