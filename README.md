@@ -1,6 +1,6 @@
 ** **
 
-# Remita Inline Payment SDK
+# Remita Interbank Transfer Service SDK
 
 
 ## Table of Contents
@@ -86,34 +86,8 @@ public class MainActivity extends AppCompatActivity implements RemitaGatewayPaym
             @Override
             public void onClick(View view) {
 
-                EditText et_amount = findViewById(R.id.et_amount);
-                String amount = et_amount.getText().toString();
-
-                String url = RIPGateway.Endpoint.DEMO;
-                String api_key = "QzAwMDAxOTUwNjl8NDMyNTkxNjl8ZTg0MjI2MDg4MjU0NzA2NTY2MTYwNGU1NjNiMjUzYjk4ZDQwZjljZGFiMTVmYTljMDUwMGQ0MDg2MjIyYjEyNTA1ZTE2MTMxNmE3ZjM1OTZmYmJkOTE2MTRiY2NmZTY5NTM4MGQ2MDBlZGJlZmM2ODc2YTc2M2M4MjgyZmFjODc=";
-                String email = "diagboya@systemspecs.com.ng";
-                String currencyCode = "NGN";
-                String firstName = "Iyare";
-                String lastName = "Diagboya";
-                String customerId = "diagboya@systemspecs.com.ng";
-                String phoneNumber = "07031731478";
-                String transactionId = String.valueOf(new Date().getTime());
-                String narration = "Bugatti Chiron 2020";
-
-                RemitaInlinePaymentSDK remitaInlinePaymentSDK = RemitaInlinePaymentSDK.getInstance();
-                remitaInlinePaymentSDK.setRemitaGatewayPaymentResponseListener(MainActivity.this);
-
-                remitaInlinePaymentSDK.initiatePayment(MainActivity.this, url, api_key, email,
-                        amount, currencyCode, firstName, lastName, customerId, phoneNumber, transactionId, narration);
-            }
+             }
         });
-    }
-
-    @Override
-    public void onPaymentCompleted(PaymentResponse paymentResponse) {
-
-        Log.v("+++ Response: ", JsonUtil.toJson(paymentResponse));
-        Toast.makeText(this, JsonUtil.toJson(paymentResponse), Toast.LENGTH_LONG);
     }
 }
  ```
@@ -121,6 +95,6 @@ public class MainActivity extends AppCompatActivity implements RemitaGatewayPaym
 
 Where url can be:
 
-**RIPGateway.Endpoint.DEMO** (for testing) and **RIPGateway.Endpoint.PRODUCTION** (for live).
+**credentials.setEnvironment("DEMO");** (for testing) and **credentials.setEnvironment("LIVE");** (for live).
 
 ![](images/inline_snapshot.JPG)
