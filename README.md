@@ -93,5 +93,3 @@ public class MainActivity extends AppCompatActivity implements RemitaGatewayPaym
 Where url can be:
 
 **credentials.setEnvironment("DEMO");** (for testing) and **credentials.setEnvironment("LIVE");** (for live).
-
-![](images/inline_snapshot.JPG)
