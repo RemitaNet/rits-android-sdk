@@ -3,7 +3,7 @@ package ng.com.systemspecs.dto.accountenquiry;
 import java.io.Serializable;
 
 
-public class AccountEnqiriesRequest implements Serializable {
+public class AccountEnquiryRequest implements Serializable {
 
     private String accountNo;
 

@@ -7,18 +7,24 @@ import javax.crypto.spec.SecretKeySpec;
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.lang3.StringUtils;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import ng.com.systemspecs.config.ApplicationUrl;
 import ng.com.systemspecs.config.Credentials;
+import ng.com.systemspecs.dto.bulkpayment.BulkPaymentInfo;
+import ng.com.systemspecs.dto.bulkpayment.BulkPaymentRequest;
+import ng.com.systemspecs.dto.bulkpayment.PaymentDetails;
 import ng.com.systemspecs.dto.singlepayment.SinglePaymentRequest;
 import ng.com.systemspecs.dto.singlepayment.status.PaymentStatusRequest;
 
 
 public class FieldEncryptionService {
 
-    private static String encoding = "UTF-8";
+    public static String encoding = "UTF-8";
 
 
-    static String encrypt(String plainText, String initVector, String secretKey, String algorithm, String cipherString, String encoding) {
+    public static String encrypt(String plainText, String initVector, String secretKey, String algorithm, String cipherString, String encoding) {
         String encryptedText = StringUtils.EMPTY;
         try {
             IvParameterSpec iv = new IvParameterSpec(initVector.getBytes(encoding));
@@ -52,5 +58,43 @@ public class FieldEncryptionService {
         PaymentStatusRequest encryptedRequest = new PaymentStatusRequest();
         encryptedRequest.setTransRef(encrypt(request.getTransRef().trim(), credentials.getSecretKeyIv(), credentials.getSecretKey(), ApplicationUrl.algorithm, ApplicationUrl.cipher, encoding));
         return encryptedRequest;
+    }
+
+    public static String encryptField(String field, Credentials credentials) {
+        return encrypt(field.trim(), credentials.getSecretKeyIv(), credentials.getSecretKey(), ApplicationUrl.algorithm, ApplicationUrl.cipher, encoding);
+    }
+
+    public static BulkPaymentRequest encryptBulkPaymentFields(BulkPaymentRequest request, Credentials credentials) {
+
+        BulkPaymentRequest bulkPaymentRequest = new BulkPaymentRequest();
+
+        BulkPaymentInfo bulkPaymentInfo = request.getBulkPaymentInfo();
+        BulkPaymentInfo encryptedBulkPaymentInfo = new BulkPaymentInfo();
+        encryptedBulkPaymentInfo.setTotalAmount(encrypt(bulkPaymentInfo.getTotalAmount().trim(), credentials.getSecretKeyIv(), credentials.getSecretKey(), ApplicationUrl.algorithm, ApplicationUrl.cipher, encoding));
+        encryptedBulkPaymentInfo.setBatchRef(encrypt(bulkPaymentInfo.getBatchRef().trim(), credentials.getSecretKeyIv(), credentials.getSecretKey(), ApplicationUrl.algorithm, ApplicationUrl.cipher, encoding));
+        encryptedBulkPaymentInfo.setDebitAccount(encrypt(bulkPaymentInfo.getDebitAccount().trim(), credentials.getSecretKeyIv(), credentials.getSecretKey(), ApplicationUrl.algorithm, ApplicationUrl.cipher, encoding));
+        encryptedBulkPaymentInfo.setBankCode(encrypt(bulkPaymentInfo.getBankCode().trim(), credentials.getSecretKeyIv(), credentials.getSecretKey(), ApplicationUrl.algorithm, ApplicationUrl.cipher, encoding));
+        encryptedBulkPaymentInfo.setNarration(encrypt(bulkPaymentInfo.getNarration().trim(), credentials.getSecretKeyIv(), credentials.getSecretKey(), ApplicationUrl.algorithm, ApplicationUrl.cipher, encoding));
+
+        List<PaymentDetails> paymentDetailsList = request.getPaymentDetails();
+        List<PaymentDetails> encryptedPaymentDetailsList = new ArrayList<>();
+        PaymentDetails encryptedPaymentDetail;
+
+        for (PaymentDetails paymentDetails : paymentDetailsList) {
+
+            encryptedPaymentDetail = new PaymentDetails();
+            encryptedPaymentDetail.setAmount(encrypt(paymentDetails.getAmount().trim(), credentials.getSecretKeyIv(), credentials.getSecretKey(), ApplicationUrl.algorithm, ApplicationUrl.cipher, encoding));
+            encryptedPaymentDetail.setBenficiaryEmail(encrypt(paymentDetails.getBenficiaryEmail().trim(), credentials.getSecretKeyIv(), credentials.getSecretKey(), ApplicationUrl.algorithm, ApplicationUrl.cipher, encoding));
+            encryptedPaymentDetail.setTransRef(encrypt(paymentDetails.getTransRef().trim(), credentials.getSecretKeyIv(), credentials.getSecretKey(), ApplicationUrl.algorithm, ApplicationUrl.cipher, encoding));
+            encryptedPaymentDetail.setBenficiaryBankCode(encrypt(paymentDetails.getBenficiaryBankCode().trim(), credentials.getSecretKeyIv(), credentials.getSecretKey(), ApplicationUrl.algorithm, ApplicationUrl.cipher, encoding));
+            encryptedPaymentDetail.setBenficiaryAccountNumber(encrypt(paymentDetails.getBenficiaryAccountNumber().trim(), credentials.getSecretKeyIv(), credentials.getSecretKey(), ApplicationUrl.algorithm, ApplicationUrl.cipher, encoding));
+            encryptedPaymentDetail.setNarration(encrypt(paymentDetails.getNarration().trim(), credentials.getSecretKeyIv(), credentials.getSecretKey(), ApplicationUrl.algorithm, ApplicationUrl.cipher, encoding));
+            encryptedPaymentDetailsList.add(encryptedPaymentDetail);
+        }
+
+        bulkPaymentRequest.setBulkPaymentInfo(encryptedBulkPaymentInfo);
+        bulkPaymentRequest.setPaymentDetails(encryptedPaymentDetailsList);
+
+        return bulkPaymentRequest;
     }
 }

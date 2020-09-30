@@ -1,6 +1,6 @@
 package ng.com.systemspecs.dto.accountenquiry;
 
-public class AccountEnquiries {
+public class AccountEnquiry {
 
     private String accountName;
 

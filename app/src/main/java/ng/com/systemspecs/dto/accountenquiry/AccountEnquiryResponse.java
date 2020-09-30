@@ -1,13 +1,13 @@
 package ng.com.systemspecs.dto.accountenquiry;
 
-public class AccountEnquiriesResponse {
+public class AccountEnquiryResponse {
 
-    private AccountEnquiries data;
+    private AccountEnquiry data;
 
     private String status;
 
 
-    public AccountEnquiries getData() {
+    public AccountEnquiry getData() {
         return data;
     }
 
@@ -17,7 +17,7 @@ public class AccountEnquiriesResponse {
     }
 
 
-    public void setData(AccountEnquiries data) {
+    public void setData(AccountEnquiry data) {
         this.data = data;
     }
 

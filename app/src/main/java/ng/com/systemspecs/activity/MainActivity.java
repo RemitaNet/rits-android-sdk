@@ -5,14 +5,25 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import ng.com.systemspecs.R;
 import ng.com.systemspecs.config.Credentials;
+import ng.com.systemspecs.dto.accountenquiry.AccountEnquiryRequest;
+import ng.com.systemspecs.dto.accountenquiry.AccountEnquiryResponse;
 import ng.com.systemspecs.dto.activebanks.GetActiveBankResponse;
+import ng.com.systemspecs.dto.bulkpayment.BulkPaymentInfo;
+import ng.com.systemspecs.dto.bulkpayment.BulkPaymentRequest;
+import ng.com.systemspecs.dto.bulkpayment.BulkPaymentResponse;
+import ng.com.systemspecs.dto.bulkpayment.PaymentDetails;
+import ng.com.systemspecs.dto.bulkpayment.status.BulkPaymentStatusRequest;
+import ng.com.systemspecs.dto.bulkpayment.status.BulkPaymentStatusResponse;
+import ng.com.systemspecs.dto.singlepayment.SinglePaymentRequest;
+import ng.com.systemspecs.dto.singlepayment.SinglePaymentResponse;
 import ng.com.systemspecs.dto.singlepayment.status.PaymentStatusRequest;
 import ng.com.systemspecs.dto.singlepayment.status.PaymentStatusResponse;
 import ng.com.systemspecs.service.RemitaRITSService;
-import ng.com.systemspecs.dto.singlepayment.SinglePaymentRequest;
-import ng.com.systemspecs.dto.singlepayment.SinglePaymentResponse;
 import ng.com.systemspecs.utils.JsonUtil;
 import ng.com.systemspecs.utils.StringUtils;
 
@@ -25,6 +36,12 @@ public class MainActivity extends AppCompatActivity {
     PaymentStatusRequest singlePaymentStatusRequest = null;
     PaymentStatusResponse singlePaymentStatusResponse = null;
     GetActiveBankResponse getActiveBankResponse = null;
+    AccountEnquiryRequest accountEnquiryRequest = null;
+    AccountEnquiryResponse accountEnquiryResponse = null;
+    BulkPaymentRequest bulkPaymentRequest = null;
+    BulkPaymentResponse bulkPaymentResponse = null;
+    BulkPaymentStatusRequest bulkPaymentStatusRequest = null;
+    BulkPaymentStatusResponse bulkPaymentStatusResponse = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +72,31 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         }).start();
+    }
+
+    public void accountEnquiry(View view) {
+        try {
+            ritsService = new RemitaRITSService(credentials);
+            accountEnquiryRequest = new AccountEnquiryRequest();
+            accountEnquiryRequest.setAccountNo("4589999044");
+            accountEnquiryRequest.setBankCode("044");
+
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        accountEnquiryResponse = ritsService.accountEnquiryRequest(accountEnquiryRequest);
+                        Log.v("+++ Response: ", JsonUtil.toJson(accountEnquiryResponse));
+
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            }).start();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public void singlePayment(View view) {
@@ -100,6 +142,92 @@ public class MainActivity extends AppCompatActivity {
                     try {
                         singlePaymentStatusResponse = ritsService.singlePaymentStatus(singlePaymentStatusRequest);
                         Log.v("+++ Response: ", JsonUtil.toJson(singlePaymentResponse));
+
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            }).start();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void bulkPayment(View view) {
+        try {
+            ritsService = new RemitaRITSService(credentials);
+            bulkPaymentRequest = new BulkPaymentRequest();
+
+            BulkPaymentInfo bulkPaymentInfo = new BulkPaymentInfo();
+            bulkPaymentInfo.setTotalAmount("20000");
+            bulkPaymentInfo.setBatchRef(System.currentTimeMillis() + StringUtils.EMPTY);
+            bulkPaymentInfo.setDebitAccount("1234565678");
+            bulkPaymentInfo.setBankCode("044");
+            bulkPaymentInfo.setNarration("Regular Payment");
+
+            List<PaymentDetails> listPaymentDetails = new ArrayList<>();
+            PaymentDetails paymentDetails = new PaymentDetails();
+            paymentDetails.setAmount("8000");
+            paymentDetails.setBenficiaryEmail("qa@test.com");
+            paymentDetails.setTransRef(System.currentTimeMillis() + StringUtils.EMPTY);
+            paymentDetails.setBenficiaryBankCode("058");
+            paymentDetails.setBenficiaryAccountNumber("0582915208011");
+            paymentDetails.setNarration("Regular Payment");
+
+            PaymentDetails paymentDetailsOne = new PaymentDetails();
+            paymentDetailsOne.setAmount("8000");
+            paymentDetailsOne.setBenficiaryEmail("qa@test.com");
+            paymentDetailsOne.setTransRef(System.currentTimeMillis() + StringUtils.EMPTY);
+            paymentDetailsOne.setBenficiaryBankCode("058");
+            paymentDetailsOne.setBenficiaryAccountNumber("0582915208012");
+            paymentDetailsOne.setNarration("Regular Payment");
+
+            PaymentDetails paymentDetailsTwo = new PaymentDetails();
+            paymentDetailsTwo.setAmount("4000");
+            paymentDetailsTwo.setBenficiaryEmail("qa@test.com");
+            paymentDetailsTwo.setTransRef(System.currentTimeMillis() + StringUtils.EMPTY);
+            paymentDetailsTwo.setBenficiaryBankCode("058");
+            paymentDetailsTwo.setBenficiaryAccountNumber("0582915208013");
+            paymentDetailsTwo.setNarration("Regular Payment");
+            listPaymentDetails.add(paymentDetails);
+            listPaymentDetails.add(paymentDetailsOne);
+            listPaymentDetails.add(paymentDetailsTwo);
+
+            bulkPaymentRequest.setPaymentDetails(listPaymentDetails);
+            bulkPaymentRequest.setBulkPaymentInfo(bulkPaymentInfo);
+            bulkPaymentResponse = ritsService.bulkPayment(bulkPaymentRequest);
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        bulkPaymentResponse = ritsService.bulkPayment(bulkPaymentRequest);
+                        Log.v("+++ Response: ", JsonUtil.toJson(bulkPaymentResponse));
+
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            }).start();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void bulkPaymentStatus(View view) {
+        try {
+            ritsService = new RemitaRITSService(credentials);
+            bulkPaymentStatusRequest = new BulkPaymentStatusRequest();
+            bulkPaymentStatusRequest.setBatchRef("1601394812513");
+            bulkPaymentStatusRequest.setTransRef("285755");
+
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        bulkPaymentStatusResponse = ritsService.bulkPaymentStatus(bulkPaymentStatusRequest);
+                        Log.v("+++ Response: ", JsonUtil.toJson(bulkPaymentStatusResponse));
 
                     } catch (Exception e) {
                         e.printStackTrace();
