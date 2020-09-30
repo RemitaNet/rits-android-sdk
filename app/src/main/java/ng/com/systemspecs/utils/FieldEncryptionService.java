@@ -10,6 +10,7 @@ import org.apache.commons.lang3.StringUtils;
 import ng.com.systemspecs.config.ApplicationUrl;
 import ng.com.systemspecs.config.Credentials;
 import ng.com.systemspecs.dto.singlepayment.SinglePaymentRequest;
+import ng.com.systemspecs.dto.singlepayment.status.PaymentStatusRequest;
 
 
 public class FieldEncryptionService {
@@ -47,4 +48,9 @@ public class FieldEncryptionService {
         return encryptedSinglePaymentRequest;
     }
 
+    public static PaymentStatusRequest encryptSinglePaymentStatusField(PaymentStatusRequest request, Credentials credentials) {
+        PaymentStatusRequest encryptedRequest = new PaymentStatusRequest();
+        encryptedRequest.setTransRef(encrypt(request.getTransRef().trim(), credentials.getSecretKeyIv(), credentials.getSecretKey(), ApplicationUrl.algorithm, ApplicationUrl.cipher, encoding));
+        return encryptedRequest;
+    }
 }

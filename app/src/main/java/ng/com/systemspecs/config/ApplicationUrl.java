@@ -6,6 +6,8 @@ public class ApplicationUrl {
 
     public static String cipher = "AES/CBC/PKCS5PADDING";
 
+    public static String ACTIVE_BANKS = "/fi/banks";
+
     public static String SINGLE_PAYMENT = "/merc/payment/singlePayment.json";
 
     public static String SINGLE_PAYMENT_STATUS = "/merc/payment/status";
