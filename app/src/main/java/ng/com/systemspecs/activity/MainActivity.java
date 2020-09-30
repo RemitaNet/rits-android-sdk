@@ -50,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
 
         credentials = new Credentials();
         credentials.setEnvironment("DEMO");
-        credentials.setRequestId(System.currentTimeMillis() + StringUtils.EMPTY);
+
         credentials.setMerchantId("DEMOMDA1234");
         credentials.setApiKey("REVNT01EQTEyMzR8REVNT01EQQ==");
         credentials.setApiToken("bmR1ZFFFWEx5R2c2NmhnMEk5a25WenJaZWZwbHFFYldKOGY0bHlGZnBZQ1N5WEpXU2Y1dGt3PT0=");
@@ -59,6 +59,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void activeBanks(View view) {
+        credentials.setRequestId(System.currentTimeMillis() + StringUtils.EMPTY);
         ritsService = new RemitaRITSService(credentials);
         new Thread(new Runnable() {
             @Override
@@ -75,6 +76,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void accountEnquiry(View view) {
+        credentials.setRequestId(System.currentTimeMillis() + StringUtils.EMPTY);
         try {
             ritsService = new RemitaRITSService(credentials);
             accountEnquiryRequest = new AccountEnquiryRequest();
@@ -100,6 +102,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void singlePayment(View view) {
+        credentials.setRequestId(System.currentTimeMillis() + StringUtils.EMPTY);
         try {
             ritsService = new RemitaRITSService(credentials);
             request = new SinglePaymentRequest();
@@ -108,7 +111,7 @@ public class MainActivity extends AppCompatActivity {
             request.setToBank("044");
             request.setCreditAccount("4589999044");
             request.setNarration("Regular Payment");
-            request.setAmount("1500");
+            request.setAmount("5000");
             request.setBeneficiaryEmail("qa@test.com");
             request.setTransRef(System.currentTimeMillis() + StringUtils.EMPTY);
 
@@ -131,17 +134,18 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void singlePaymentStatus(View view) {
+        credentials.setRequestId(System.currentTimeMillis() + StringUtils.EMPTY);
         try {
             ritsService = new RemitaRITSService(credentials);
             singlePaymentStatusRequest = new PaymentStatusRequest();
-            singlePaymentStatusRequest.setTransRef("1601394812513");
+            singlePaymentStatusRequest.setTransRef("1601477714548");
 
             new Thread(new Runnable() {
                 @Override
                 public void run() {
                     try {
                         singlePaymentStatusResponse = ritsService.singlePaymentStatus(singlePaymentStatusRequest);
-                        Log.v("+++ Response: ", JsonUtil.toJson(singlePaymentResponse));
+                        Log.v("+++ Response: ", JsonUtil.toJson(singlePaymentStatusResponse));
 
                     } catch (Exception e) {
                         e.printStackTrace();
@@ -155,6 +159,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void bulkPayment(View view) {
+        credentials.setRequestId(System.currentTimeMillis() + StringUtils.EMPTY);
         try {
             ritsService = new RemitaRITSService(credentials);
             bulkPaymentRequest = new BulkPaymentRequest();
@@ -215,11 +220,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void bulkPaymentStatus(View view) {
+        credentials.setRequestId(System.currentTimeMillis() + StringUtils.EMPTY);
         try {
             ritsService = new RemitaRITSService(credentials);
             bulkPaymentStatusRequest = new BulkPaymentStatusRequest();
             bulkPaymentStatusRequest.setBatchRef("1601394812513");
-            bulkPaymentStatusRequest.setTransRef("285755");
+            bulkPaymentStatusRequest.setTransRef("1601478418248");
 
             new Thread(new Runnable() {
                 @Override

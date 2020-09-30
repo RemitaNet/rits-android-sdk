@@ -54,12 +54,6 @@ public class FieldEncryptionService {
         return encryptedSinglePaymentRequest;
     }
 
-    public static PaymentStatusRequest encryptSinglePaymentStatusField(PaymentStatusRequest request, Credentials credentials) {
-        PaymentStatusRequest encryptedRequest = new PaymentStatusRequest();
-        encryptedRequest.setTransRef(encrypt(request.getTransRef().trim(), credentials.getSecretKeyIv(), credentials.getSecretKey(), ApplicationUrl.algorithm, ApplicationUrl.cipher, encoding));
-        return encryptedRequest;
-    }
-
     public static String encryptField(String field, Credentials credentials) {
         return encrypt(field.trim(), credentials.getSecretKeyIv(), credentials.getSecretKey(), ApplicationUrl.algorithm, ApplicationUrl.cipher, encoding);
     }

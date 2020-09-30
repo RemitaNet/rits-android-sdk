@@ -154,7 +154,6 @@ public class RemitaRITSService {
     }
 
     public PaymentStatusResponse singlePaymentStatus(PaymentStatusRequest request) throws Exception {
-        PaymentStatusResponse paymentStatusResponse = null;
         String url = null;
         if (!ConfigCredentials.isCredential(credentials)) {
             PaymentStatus data = new PaymentStatus();
@@ -175,14 +174,13 @@ public class RemitaRITSService {
         Log.v("+++ Request ", JsonUtil.toJson(request));
         Log.v("", "");
 
-        request = FieldEncryptionService.encryptSinglePaymentStatusField(request, credentials);
+        request.setTransRef(FieldEncryptionService.encrypt(request.getTransRef().trim(), credentials.getSecretKeyIv(), credentials.getSecretKey(), ApplicationUrl.algorithm, ApplicationUrl.cipher, FieldEncryptionService.encoding));
 
         String response = null;
 
         response = AbstractRestClient.postRequest(url, request, credentials);
-        paymentStatusResponse = JsonUtil.fromJson(response, PaymentStatusResponse.class);
 
-        return paymentStatusResponse;
+        return JsonUtil.fromJson(response, PaymentStatusResponse.class);
     }
 
     public BulkPaymentResponse bulkPayment(BulkPaymentRequest request) throws Exception {
