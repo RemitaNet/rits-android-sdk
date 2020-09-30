@@ -162,8 +162,8 @@ public class MainActivity extends AppCompatActivity {
             BulkPaymentInfo bulkPaymentInfo = new BulkPaymentInfo();
             bulkPaymentInfo.setTotalAmount("20000");
             bulkPaymentInfo.setBatchRef(System.currentTimeMillis() + StringUtils.EMPTY);
-            bulkPaymentInfo.setDebitAccount("1234565678");
-            bulkPaymentInfo.setBankCode("044");
+            bulkPaymentInfo.setDebitAccount("8909090989");
+            bulkPaymentInfo.setBankCode("058");
             bulkPaymentInfo.setNarration("Regular Payment");
 
             List<PaymentDetails> listPaymentDetails = new ArrayList<>();
@@ -196,7 +196,6 @@ public class MainActivity extends AppCompatActivity {
 
             bulkPaymentRequest.setPaymentDetails(listPaymentDetails);
             bulkPaymentRequest.setBulkPaymentInfo(bulkPaymentInfo);
-            bulkPaymentResponse = ritsService.bulkPayment(bulkPaymentRequest);
             new Thread(new Runnable() {
                 @Override
                 public void run() {

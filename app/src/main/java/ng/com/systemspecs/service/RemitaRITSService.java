@@ -211,6 +211,8 @@ public class RemitaRITSService {
         String response = null;
         response = AbstractRestClient.postRequest(url, request, credentials);
 
+        Log.v("+++ Response ", JsonUtil.toJson(response));
+
         return JsonUtil.fromJson(response, BulkPaymentResponse.class);
     }
 
