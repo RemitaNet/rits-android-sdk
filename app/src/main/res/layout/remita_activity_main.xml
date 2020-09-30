@@ -7,14 +7,77 @@
     android:orientation="vertical"
     android:padding="@dimen/medium_padding">
 
-
     <Button
-        android:id="@+id/button"
+        android:id="@+id/btn_active_banks"
         android:layout_width="250dp"
         android:layout_height="60dp"
         android:layout_gravity="center"
+        android:layout_marginTop="@dimen/medium_padding"
         android:background="@color/colorHapticGreen"
+        android:onClick="activeBanks"
+        android:text="ACTIVE BANKS"
+        android:textColor="@color/colorWhite"
+        android:textSize="@dimen/medium_padding" />
+
+    <Button
+        android:id="@+id/btn_account_enquiry"
+        android:layout_width="250dp"
+        android:layout_height="60dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="@dimen/medium_padding"
+        android:background="@color/colorHapticGreen"
+        android:onClick="accountEnquiry"
+        android:text="ACCOUNT ENQUIRY"
+        android:textColor="@color/colorWhite"
+        android:textSize="@dimen/medium_padding" />
+
+    <Button
+        android:id="@+id/btn_single_payment"
+        android:layout_width="250dp"
+        android:layout_height="60dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="@dimen/medium_padding"
+        android:background="@color/colorHapticGreen"
+        android:onClick="singlePayment"
         android:text="SINGLE PAYMENT"
+        android:textColor="@color/colorWhite"
+        android:textSize="@dimen/medium_padding" />
+
+    <Button
+        android:id="@+id/btn_single_payment_status"
+        android:layout_width="250dp"
+        android:layout_height="60dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="@dimen/medium_padding"
+        android:background="@color/colorHapticGreen"
+        android:onClick="singlePaymentStatus"
+        android:text="SINGLE PAYMENT STATUS"
+        android:textColor="@color/colorWhite"
+        android:textSize="@dimen/medium_padding" />
+
+
+    <Button
+        android:id="@+id/btn_bulk_payment"
+        android:layout_width="250dp"
+        android:layout_height="60dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="@dimen/medium_padding"
+        android:background="@color/colorHapticGreen"
+        android:onClick="bulkPayment"
+        android:text="BULK PAYMENT"
+        android:textColor="@color/colorWhite"
+        android:textSize="@dimen/medium_padding" />
+
+
+    <Button
+        android:id="@+id/btn_bulk_payment_status"
+        android:layout_width="250dp"
+        android:layout_height="60dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="@dimen/medium_padding"
+        android:background="@color/colorHapticGreen"
+        android:onClick="bulkPaymentStatus"
+        android:text="BULK PAYMENT STATUS"
         android:textColor="@color/colorWhite"
         android:textSize="@dimen/medium_padding" />
 </LinearLayout>

@@ -9,7 +9,7 @@ import org.apache.commons.lang3.StringUtils;
 
 import ng.com.systemspecs.config.ApplicationUrl;
 import ng.com.systemspecs.config.Credentials;
-import ng.com.systemspecs.dto.SinglePaymentRequest;
+import ng.com.systemspecs.dto.singlepayment.SinglePaymentRequest;
 
 
 public class FieldEncryptionService {

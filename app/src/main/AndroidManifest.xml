@@ -16,7 +16,7 @@
         <!--COMMENT OUT THIS ACTIVITY TAG FOR .AAR MODE-->
         <!-- -&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;-->
         <activity
-            android:name="ng.com.systemspecs.module.MainActivity"
+            android:name="ng.com.systemspecs.activity.MainActivity"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -26,14 +26,14 @@
         <!--&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;END-&#45;&#45;&#45;&#45;&#45;&#45;-->
 
         <activity
-            android:name="ng.com.systemspecs.module.webview.InlinePaymentActivity"
+            android:name="ng.com.systemspecs.activity.webview.InlinePaymentActivity"
             android:screenOrientation="portrait"
             android:theme="@style/RemitaAppTheme" />
         <activity
-            android:name="ng.com.systemspecs.module.paymentfailed.PaymentFailedActivity"
+            android:name="ng.com.systemspecs.activity.paymentfailed.PaymentFailedActivity"
             android:theme="@style/RemitaAppTheme" />
         <activity
-            android:name="ng.com.systemspecs.module.initialization.RemitaInitializationFailedActivity"
+            android:name="ng.com.systemspecs.activity.initialization.RemitaInitializationFailedActivity"
             android:theme="@style/RemitaAppTheme" />
     </application>
 

@@ -1,6 +1,6 @@
 ** **
 
-# Remita Interbank Transfer Service SDK
+# Remita Inline Payment SDK
 
 
 ## Table of Contents
@@ -26,7 +26,7 @@ The following pages outlines the steps to integrating Remita Inline Payment SDK 
  
 
 **Step 3:** Select **Modules** and click the &quot; **+**&quot; under Modules section to add the &quot;rip-sdk.aar&quot; to your project.
-Note: You can find the rits-sdk.aar at: https://github.com/RemitaNet/remita-android/tree/master/aar
+Note: You can find the rip-sdk.aar at: https://github.com/RemitaNet/remita-android/tree/master/aar
 
  ![](images/modules.JPG)
 
@@ -49,13 +49,13 @@ Note: You can find the rits-sdk.aar at: https://github.com/RemitaNet/remita-andr
 **Step 7:** Select **Module Dependency**
 ![](images/module_dependency.JPG)
  
-**Step 8:** Select the **rits-sdk** module and click &#39;OK&#39;.
+**Step 8:** Select the **rip-sdk** module and click &#39;OK&#39;.
 ![](images/select_rip-sdk.JPG)
  
 **Step 9:** Click on **Apply/Ok.**
 ![](images/select_rip-sdk_2.JPG)
 
-**Step 10:** Rebuild project, you should see **implementation project(path: &#39;:rits-sdk&#39;)** in your dependencies block.
+**Step 10:** Rebuild project, you should see **implementation project(path: &#39;:rip-sdk&#39;)** in your dependencies block.
 ![](images/rebuild.JPG)
 
 **Step 11:** Just in case
@@ -66,6 +66,9 @@ Add  **api 'com.google.code.gson:gson:2.8.2'** to your applications dependencies
 
 
 # 2.0         TRY IT NOW
+
+You should invoke the RemitaInlinePaymentSDK.getInstance() at any point when making payment:
+
 
 **Sample Code:**
 ```java
@@ -83,8 +86,34 @@ public class MainActivity extends AppCompatActivity implements RemitaGatewayPaym
             @Override
             public void onClick(View view) {
 
-             }
+                EditText et_amount = findViewById(R.id.et_amount);
+                String amount = et_amount.getText().toString();
+
+                String url = RIPGateway.Endpoint.DEMO;
+                String api_key = "QzAwMDAxOTUwNjl8NDMyNTkxNjl8ZTg0MjI2MDg4MjU0NzA2NTY2MTYwNGU1NjNiMjUzYjk4ZDQwZjljZGFiMTVmYTljMDUwMGQ0MDg2MjIyYjEyNTA1ZTE2MTMxNmE3ZjM1OTZmYmJkOTE2MTRiY2NmZTY5NTM4MGQ2MDBlZGJlZmM2ODc2YTc2M2M4MjgyZmFjODc=";
+                String email = "diagboya@systemspecs.com.ng";
+                String currencyCode = "NGN";
+                String firstName = "Iyare";
+                String lastName = "Diagboya";
+                String customerId = "diagboya@systemspecs.com.ng";
+                String phoneNumber = "07031731478";
+                String transactionId = String.valueOf(new Date().getTime());
+                String narration = "Bugatti Chiron 2020";
+
+                RemitaInlinePaymentSDK remitaInlinePaymentSDK = RemitaInlinePaymentSDK.getInstance();
+                remitaInlinePaymentSDK.setRemitaGatewayPaymentResponseListener(MainActivity.this);
+
+                remitaInlinePaymentSDK.initiatePayment(MainActivity.this, url, api_key, email,
+                        amount, currencyCode, firstName, lastName, customerId, phoneNumber, transactionId, narration);
+            }
         });
+    }
+
+    @Override
+    public void onPaymentCompleted(PaymentResponse paymentResponse) {
+
+        Log.v("+++ Response: ", JsonUtil.toJson(paymentResponse));
+        Toast.makeText(this, JsonUtil.toJson(paymentResponse), Toast.LENGTH_LONG);
     }
 }
  ```
@@ -92,4 +121,6 @@ public class MainActivity extends AppCompatActivity implements RemitaGatewayPaym
 
 Where url can be:
 
-**credentials.setEnvironment("DEMO");** (for testing) and **credentials.setEnvironment("LIVE");** (for live).
+**RIPGateway.Endpoint.DEMO** (for testing) and **RIPGateway.Endpoint.PRODUCTION** (for live).
+
+![](images/inline_snapshot.JPG)
